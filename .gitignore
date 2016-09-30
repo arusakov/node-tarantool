@@ -1,0 +1,5 @@
+lib
+node_modules
+
+node-tarantool.d.ts
+npm-debug.log

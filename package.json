@@ -1,0 +1,46 @@
+{
+  "name": "node-tarantool",
+  "version": "0.0.1",
+  "description": "Tarantool v1.7+ driver for Node.js",
+  "main": "./lib/node-tarantool.js",
+  "typings": "./node-tarantool.d.ts",
+  "files": [
+    "lib",
+    "typings"
+  ],
+  "scripts": {
+    "check": "tsc --noEmit -p ./src && tsc --noEmit -p ./test",
+    "clean": "rimraf ./lib",
+    "prepublish": "npm run clean && tsc -d --declarationDir ./ -p ./src",
+    "test": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arusakov/node-tarantool.git"
+  },
+  "keywords": [
+    "Node",
+    "Tarantool",
+    "msgpack",
+    "socket",
+    "database",
+    "db"
+  ],
+  "authors": [
+    "Alexander Rusakov <a_s_rusakov@mail.ru> (https://github.com/arusakov)",
+    "Artem Nikolsky (https://github.com/nikolsky)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arusakov/node-tarantool/issues"
+  },
+  "homepage": "https://github.com/arusakov/node-tarantool#readme",
+  "devDependencies": {
+    "bluebird": "3.4.6",
+    "mocha": "3.1.0",
+    "msgpack-lite": "0.1.20",
+    "rimraf": "2.5.4",
+    "typescript": "2.0.3",
+    "typings": "1.4.0"
+  }
+}
