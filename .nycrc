@@ -12,7 +12,7 @@
         "ts-node/register"
     ],
     "reporter": [
-        "text-lcov"
+        "text"
     ],
     "sourceMap": true,
     "instrument": true
