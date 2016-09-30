@@ -1,5 +1,8 @@
+.nyc_output
+coverage
 lib
 node_modules
 
+.DS_Store
 node-tarantool.d.ts
 npm-debug.log

@@ -1,0 +1,20 @@
+{
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "extension": [
+        ".ts"
+    ],
+    "require": [
+        "ts-node/register"
+    ],
+    "reporter": [
+        "lcov",
+        "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+}
