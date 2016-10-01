@@ -5,8 +5,7 @@
   "main": "./lib/node-tarantool.js",
   "typings": "./node-tarantool.d.ts",
   "files": [
-    "lib",
-    "typings"
+    "lib"
   ],
   "scripts": {
     "clean": "rimraf ./lib",
