@@ -30,8 +30,3 @@ export class Connection {
         console.log(parseGreeting(data));
     }
 }
-
-
-new Connection({
-    port: 3301
-});
