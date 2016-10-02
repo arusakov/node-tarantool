@@ -1,4 +1,5 @@
 .nyc_output
+.testdb
 coverage
 lib
 node_modules
