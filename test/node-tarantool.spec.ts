@@ -1,9 +1,11 @@
-import { Connect } from '../src/node-tarantool';
+import { Connection } from '../src/node-tarantool';
 
 describe('node-tarantool', () => {
 
     it('new Connect()', () => {
-        new Connect();
+        new Connection({
+            port: 3301
+        });
     });
 
 });
