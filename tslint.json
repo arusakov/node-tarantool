@@ -3,6 +3,13 @@
     "rules": {
         "no-console": [
             false
+        ],
+        "member-access": [
+            false
+        ],
+        "typedef":[
+            true,
+            "call-signature"
         ]
     }
 }
