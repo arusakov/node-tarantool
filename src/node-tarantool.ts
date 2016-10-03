@@ -1,20 +1,20 @@
-import { createConnection, Socket } from 'net';
+import { Socket, createConnection } from "net";
 
-import { parseGreeting } from './protocol';
+import { parseGreeting } from "./protocol";
 
 export type ConnectionOptions = {
     port: number;
 }
 
 export class Connection {
-    // private salt: string = '';
+    // private salt: string = "";
 
     protected socket: Socket;
 
     constructor({ port }: ConnectionOptions) {
         this.socket = createConnection(port);
-        this.socket.on('connect', this.onConnect);
-        this.socket.on('data', this.onData);
+        this.socket.on("connect", this.onConnect);
+        this.socket.on("data", this.onData);
     }
 
     // auth(user: string, password: string, cb?: () => void): this {
@@ -22,7 +22,7 @@ export class Connection {
     // }
 
     protected onConnect = () => {
-        console.log('connected');
+        console.log("connected");
     }
 
     protected onData = (data: Buffer) => {

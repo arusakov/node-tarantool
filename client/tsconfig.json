@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictNullChecks": true,
+        "target": "es2015"
+    },
+    "include": [
+        "../typings/globals/node/**/*",
+        "../src/**/*",
+        "./**/*"
+    ]
+}

@@ -3,20 +3,21 @@
   "version": "0.0.1",
   "description": "Tarantool v1.7+ driver for Node.js",
   "main": "./lib/node-tarantool.js",
-  "typings": "./node-tarantool.d.ts",
+  "typings": "./lib/node-tarantool.d.ts",
   "files": [
     "lib"
   ],
   "scripts": {
     "clean": "rimraf ./lib",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "compile": "tsc --noEmit -p ./src && tsc --noEmit -p ./test",
+    "compile": "tsc --noEmit -p ./src && tsc --noEmit -p ./test && tsc --noEmit -p ./client",
     "coverage": "NODE_ENV=test TS_NODE_PROJECT=./test nyc mocha",
     "coverage-html": "NODE_ENV=test TS_NODE_PROJECT=./test nyc --reporter=html mocha",
-    "prepublish": "npm run clean && tsc -d --declarationDir ./ -p ./src",
+    "lint": "tslint ./src/**/*.ts ./client/**/*.ts ./test/**/*.ts",
+    "prepublish": "npm run clean && tsc -d -p ./src",
     "test": "NODE_ENV=test TS_NODE_PROJECT=./test mocha",
     "test-ci": "NODE_ENV=test TS_NODE_PROJECT=./test mocha -w",
-    "travis": "npm run compile && npm run coverage && npm run codecov"
+    "travis": "npm run lint && npm run compile && npm run coverage && npm run codecov"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "nyc": "8.3.0",
     "rimraf": "2.5.4",
     "ts-node": "1.3.0",
+    "tslint": "3.15.1",
     "typescript": "2.0.3",
     "typings": "1.4.0"
   },
