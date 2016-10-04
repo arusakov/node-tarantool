@@ -29,8 +29,8 @@
             "stopOnEntry": true,
             "args": [
                 "--project",
-                "./test",
-                "./test/node-tarantool.spec.ts"
+                "./client",
+                "./client/one.ts"
             ],
             "cwd": "${workspaceRoot}",
             "preLaunchTask": null,

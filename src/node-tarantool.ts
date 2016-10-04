@@ -1,6 +1,7 @@
+import { decode } from "msgpack-lite";
 import { Socket } from "net";
 
-import { } from "./protocol";
+import { parseGreeting } from "./protocol";
 
 export type ConnectionOptions = {
     port: number;
@@ -18,7 +19,7 @@ export class Connection {
         } as any); // todo @arusakov give back to DT repo
 
         this.socket.on("connect", this.onConnect);
-        this.socket.on("data", this.onData);
+        this.socket.once("data", this.onGreeting);
     }
 
     connect(): this {
@@ -39,10 +40,19 @@ export class Connection {
         console.log("connected");
     }
 
+    protected onGreeting = (data: Buffer) => {
+        console.log("Greeting", data.length, data);
+        console.log(parseGreeting(data));
+
+        this.socket.on("data", this.onData);
+    }
+
     protected onData = (data: Buffer) => {
-        console.log(data.byteLength);
-        console.log(data);
+        if (data.length < 5) {
+            // don't know
+            return;
+        }
+        console.log(decode(data));
         console.log(decode(data.slice(5)));
-        // console.log(parseGreeting(data));
     }
 }

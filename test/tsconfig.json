@@ -13,6 +13,7 @@
     },
     "include": [
          "../typings/globals/node/**/*",
+         "../typings/globals/msgpack-lite/**/*",
          "../typings/globals/mocha/**/*",
         "./**/*"
     ]
