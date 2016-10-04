@@ -7,9 +7,13 @@
         "member-access": [
             false
         ],
-        "typedef":[
+        "typedef": [
             true,
-            "call-signature"
+            "call-signature",
+            "parameter"
+        ],
+        "member-ordering": [
+            false
         ]
     }
 }
