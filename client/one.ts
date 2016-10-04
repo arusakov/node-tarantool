@@ -1,6 +1,10 @@
 import { Connection } from "../src/node-tarantool";
 import { getPrefix } from "../src/protocol";
-import { encode } from "msgpack-lite";
+import {
+    TCodePing,
+    TKeyCode,
+    TKeySync,
+ } from "../src/tarantool-types";
 
 const con = new Connection({
     port: 3301,
@@ -8,17 +12,16 @@ const con = new Connection({
 
 con.connect();
 
-const parts = new Array(2);
-
-const header = encode([
-    0x40, // code - ping
-    0x02, // sync - requestId
-    null, // schemaId
+// msgpack map https://github.com/msgpack/msgpack/blob/master/spec.md#map-format-family
+const header = new Buffer([
+    0b10000010, // msgpack map with N=2
+    TKeyCode, TCodePing, // code => ping
+    TKeySync, 1, // sync => 1
 ]);
+console.log(header);
 
-parts[0] = getPrefix(header.byteLength);
-parts[1] = header;
+const packet = [getPrefix(header.length), header];
 
 setTimeout(() => {
-    con.send(Buffer.concat(parts));
+    con.send(Buffer.concat(packet));
 }, 1000);
