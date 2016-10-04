@@ -22,8 +22,8 @@ const header = new Buffer([
 console.log(header);
 
 const body = new Buffer([
-    0b10000011, // msgpack map with N=1
-    TKeySpaceId, 512, // spaceId => 272
+    0b10000011, // msgpack map with N=3
+    TKeySpaceId, 512, // spaceId => 512
     TKeyIndexId, 512, // keyId => 512
     TKeyIterator, 0, // itaretor => all (0)
 ]);
