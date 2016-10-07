@@ -54,13 +54,13 @@ export class Connection {
         console.log("Greeting", data.length, data);
         console.log(Protocol.parseGreeting(data));
 
-        // this.socket.on("data", this.onData);
-        this.socket.pipe(createDecodeStream()).on("data", this.onData);
+        this.socket.on("data", this.onData);
+        // this.socket.pipe(createDecodeStream()).on("data", this.onData);
     }
 
-    protected onData = (data: number | TResponseHeader | TResponse) => {
-        if (typeof data === "object") {
-            console.log(data);
-        }
+    protected onData = (data: Buffer) => {
+        // if (typeof data === "object") {
+            console.log(data.toString('base64'));
+        // }
     }
 }
