@@ -16,7 +16,7 @@
     "lint": "tslint ./src/**/*.ts ./client/**/*.ts ./test/**/*.ts",
     "prepublish": "npm run clean && tsc -d -p ./src",
     "test": "NODE_ENV=test TS_NODE_PROJECT=./test mocha",
-    "test-ci": "NODE_ENV=test TS_NODE_PROJECT=./test mocha -w",
+    "test-ci": "NODE_ENV=test TS_NODE_PROJECT=./test mocha --watch --watch-extensions ts",
     "travis": "npm run lint && npm run compile && npm run coverage && npm run codecov"
   },
   "repository": {
