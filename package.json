@@ -43,7 +43,7 @@
   "devDependencies": {
     "bluebird": "3.4.6",
     "codecov": "1.0.1",
-    "mocha": "3.1.1",
+    "mocha": "3.1.2",
     "msgpack-lite": "0.1.20",
     "nyc": "8.3.1",
     "rimraf": "2.5.4",
