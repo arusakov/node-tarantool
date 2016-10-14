@@ -44,7 +44,7 @@
     "bluebird": "3.4.6",
     "codecov": "1.0.1",
     "mocha": "3.1.2",
-    "msgpack-lite": "0.1.20",
+    "msgpack-lite": "0.1.26",
     "nyc": "8.3.1",
     "rimraf": "2.5.4",
     "ts-node": "1.4.3",
