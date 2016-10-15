@@ -10,6 +10,9 @@
         "typedef":[
             true,
             "call-signature"
+        ],
+        "no-unused-variable": [
+            false
         ]
     }
 }

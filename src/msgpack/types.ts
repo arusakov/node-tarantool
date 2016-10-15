@@ -21,7 +21,7 @@ export const INT16  = 0b11010001;
 export const INT32  = 0b11010010;
 export const INT64  = 0b11010011;
 
-export const ARR16 = 0b11011100;
-export const ARR32 = 0b11011101;
-export const MAP16 = 0b11011110;
-export const MAP32 = 0b11011111;
+export const ARR16  = 0b11011100;
+export const ARR32  = 0b11011101;
+export const MAP16  = 0b11011110;
+export const MAP32  = 0b11011111;
