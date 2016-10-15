@@ -1,3 +1,7 @@
+/**
+ * Msgpack types
+ * https://github.com/msgpack/msgpack/blob/master/spec.md#overview
+ */
 
 export const POSFIXINT = 0; // 0xxxxxxx
 export const NEGFIXINT = 0b11100000; // 111xxxxx
