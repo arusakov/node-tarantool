@@ -9,6 +9,6 @@ export function isFixMap(byte: number): boolean {
 
 export function getFixMapSize(byte: number): number {
     /* tslint:disable:no-bitwise */
-    return byte & 0b00011111;
+    return byte & 0b00001111;
     /* tslint:enable:no-bitwise */
 }
