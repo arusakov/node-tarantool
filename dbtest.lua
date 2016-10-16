@@ -11,6 +11,7 @@ pcall(
 
 box.cfg {
     listen = 3301,
+    wal_mode = 'none',
     work_dir = DIR,
 }
 
