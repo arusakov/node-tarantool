@@ -46,6 +46,29 @@
             "outDir": null
         },
         {
+            "name": "mocha",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/node_modules/.bin/_mocha",
+            "stopOnEntry": true,
+            "args": [
+                "--watch"
+            ],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": null,
+            "runtimeArgs": [
+                "--nolazy"
+            ],
+            "env": {
+                "NODE_ENV": "test",
+                "TS_NODE_PROJECT" : "./test"
+            },
+            "console": "internalConsole",
+            "sourceMaps": true,
+            "outDir": null
+        },
+        {
             "name": "Attach",
             "type": "node",
             "request": "attach",

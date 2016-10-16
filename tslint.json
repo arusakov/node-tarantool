@@ -10,6 +10,13 @@
         "typedef":[
             true,
             "call-signature"
-        ]
+        ],
+        "no-unused-variable": [
+            false
+        ],
+        "interface-name": [
+            false
+        ],
+        "object-literal-sort-keys": false
     }
 }
