@@ -1,7 +1,12 @@
-import { decode } from "msgpack-lite";
 import { Socket } from "net";
 
-import { parseGreeting } from "./protocol";
+import { createDecodeStream } from "msgpack-lite";
+
+import { Protocol } from "./protocol";
+import {
+    TResponse,
+    TResponseHeader,
+} from "./tarantool-types";
 
 export type ConnectionOptions = {
     port: number;
@@ -10,6 +15,7 @@ export type ConnectionOptions = {
 export class Connection {
     private socket: Socket;
     private port: number;
+    private protocol = new Protocol();
 
     constructor({ port }: ConnectionOptions) {
         this.port = port;
@@ -27,8 +33,12 @@ export class Connection {
         return this;
     }
 
-    send(smth: any): void {
-        this.socket.write(smth);
+    send(header: Buffer, body: Buffer): void {
+        this.socket.write(Buffer.concat([
+            this.protocol.getPrefix(header.length + body.length),
+            header,
+            body,
+        ]));
     }
 
     // todo 
@@ -42,17 +52,15 @@ export class Connection {
 
     protected onGreeting = (data: Buffer) => {
         console.log("Greeting", data.length, data);
-        console.log(parseGreeting(data));
+        console.log(Protocol.parseGreeting(data));
 
         this.socket.on("data", this.onData);
+        // this.socket.pipe(createDecodeStream()).on("data", this.onData);
     }
 
     protected onData = (data: Buffer) => {
-        if (data.length < 5) {
-            // don't know
-            return;
-        }
-        console.log(decode(data));
-        console.log(decode(data.slice(5)));
+        // if (typeof data === "object") {
+            console.log(data.toString('base64'));
+        // }
     }
 }
