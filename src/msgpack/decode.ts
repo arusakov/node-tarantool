@@ -3,27 +3,27 @@ import {
     getFixMapSize, isFixMap,
 } from "./map";
 
-const TYPE_ARRAY: 1 = 1;
-const TYPE_MAP: 2 = 2;
+export const TYPE_ARRAY: 1 = 1;
+export const TYPE_MAP: 2 = 2;
 
-interface SegmentBase {
+export interface SegmentBase {
     contains: number;
     expected: number;
     result: any;
 }
 
-interface SegmentArray extends SegmentBase {
+export interface SegmentArray extends SegmentBase {
     type: typeof TYPE_ARRAY;
 }
 
-interface SegmentMap extends SegmentBase {
+export interface SegmentMap extends SegmentBase {
     key: any;
     type: typeof TYPE_MAP;
 }
 
-type Segment = SegmentMap | SegmentArray;
+export type Segment = SegmentMap | SegmentArray;
 
-type Decoder = {
+export type Decoder = {
     bytes: number;
     stack: Segment[];
 }
