@@ -23,6 +23,11 @@ export interface SegmentMap extends SegmentBase {
 
 export type Segment = SegmentMap | SegmentArray;
 
+export type Node<T> = {
+    next: Node<T> | null;
+    val: T
+}
+
 export type Decoder = {
     bytes: number;
     stack: Segment[];
@@ -45,6 +50,10 @@ function createSegmentMap(count: number): SegmentMap {
         type: TYPE_MAP,
         key: null,
     };
+}
+
+function createNode<T>(val: T, next: Node<T> | null): Node<T> {
+    return { next, val };
 }
 
 function addValueToSegment(seg: Segment, val: any): boolean {
@@ -77,7 +86,7 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
     let result: any;
     let byte: number;
     let completed: boolean; // true for all simple types and empty maps and arrayes
-    let seg: Segment | null = null;
+    let stack: Node<Segment> | null = null;
 
     while (bi < bytesLen) {
         byte = buf[bi];
@@ -88,8 +97,7 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
         } else if (isFixMap(byte)) {
             const size = getFixMapSize(byte);
             if (size) {
-                seg = createSegmentMap(size);
-                ctx.stack.push(seg);
+                stack = createNode(createSegmentMap(size), stack);
                 completed = false;
             } else {
                 result = {};
@@ -104,18 +112,16 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
         bi += bInc;
 
         if (completed) {
-            while (seg) {
-                if (!addValueToSegment(seg, result)) {
+            while (stack) {
+                if (!addValueToSegment(stack.val, result)) {
                     break;
                 }
-                result = seg.result;
-                ctx.stack.pop();
-                if (!ctx.stack.length) {
-                    // decoding ended, so prepare ctx and return
-                    ctx.bytes = bi;
-                    return result;
-                }
-                seg = ctx.stack[ctx.stack.length - 1];
+                result = stack.val.result;
+                stack = stack.next;
+            }
+            if (!stack) {
+                // complete
+                break;
             }
         }
     }
