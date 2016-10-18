@@ -1,7 +1,6 @@
+import { isFixArray } from "./array";
 import { isPosFixInt } from "./int";
-import {
-    getFixMapSize, isFixMap,
-} from "./map";
+import { getFixMapSize, isFixMap } from "./map";
 
 export const TYPE_ARRAY: 1 = 1;
 export const TYPE_MAP: 2 = 2;
@@ -33,14 +32,14 @@ export type Decoder = {
     stack: Segment[];
 }
 
-// function createSegmentArray(count: number): SegmentArray {
-//     return {
-//         contains: 0,
-//         expected: count,
-//         result: new Array(count),
-//         type: TYPE_ARRAY,
-//     };
-// }
+function createSegmentArray(count: number): SegmentArray {
+    return {
+        contains: 0,
+        expected: count,
+        result: new Array(count),
+        type: TYPE_ARRAY,
+    };
+}
 
 function createSegmentMap(count: number): SegmentMap {
     return {
@@ -85,6 +84,7 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
     let bInc: number;
     let result: any;
     let byte: number;
+    let size: number;
     let completed: boolean; // true for all simple types and empty maps and arrayes
     let stack: Node<Segment> | null = null;
 
@@ -95,12 +95,22 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
             bInc = 1;
             completed = true;
         } else if (isFixMap(byte)) {
-            const size = getFixMapSize(byte);
+            size = getFixMapSize(byte);
             if (size) {
                 stack = createNode(createSegmentMap(size), stack);
                 completed = false;
             } else {
                 result = {};
+                completed = true;
+            }
+            bInc = 1;
+        } else if (isFixArray(byte)) {
+            size = getFixMapSize(byte); // todo rename it
+            if (size) {
+                stack = createNode(createSegmentArray(size), stack);
+                completed = false;
+            } else {
+                result = [];
                 completed = true;
             }
             bInc = 1;
