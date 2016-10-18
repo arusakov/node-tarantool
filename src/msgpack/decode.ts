@@ -97,6 +97,7 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
             completed = true;
         } else {
             fixpart = get4FirstBites(byte);
+            // todo @arusakov decode fixstr before
             if (fixpart === FIXMAP) {
                 size = get4lastBites(byte);
                 if (size) {
