@@ -1,6 +1,6 @@
-import { isFixArray } from "./array";
 import { isPosFixInt } from "./int";
-import { getFixMapSize, isFixMap } from "./map";
+import { FIXARR, FIXMAP } from "./types";
+import { get4FirstBites, get4lastBites } from "./utils";
 
 export const TYPE_ARRAY: 1 = 1;
 export const TYPE_MAP: 2 = 2;
@@ -87,6 +87,7 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
     let size: number;
     let completed: boolean; // true for all simple types and empty maps and arrayes
     let stack: Node<Segment> | null = null;
+    let fixpart: number;
 
     while (bi < bytesLen) {
         byte = buf[bi];
@@ -94,30 +95,33 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
             result = byte;
             bInc = 1;
             completed = true;
-        } else if (isFixMap(byte)) {
-            size = getFixMapSize(byte);
-            if (size) {
-                stack = createNode(createSegmentMap(size), stack);
-                completed = false;
-            } else {
-                result = {};
-                completed = true;
-            }
-            bInc = 1;
-        } else if (isFixArray(byte)) {
-            size = getFixMapSize(byte); // todo rename it
-            if (size) {
-                stack = createNode(createSegmentArray(size), stack);
-                completed = false;
-            } else {
-                result = [];
-                completed = true;
-            }
-            bInc = 1;
         } else {
-            // todo unsupported
-            bInc = 1;
-            completed = true;
+            fixpart = get4FirstBites(byte);
+            if (fixpart === FIXMAP) {
+                size = get4lastBites(byte);
+                if (size) {
+                    stack = createNode(createSegmentMap(size), stack);
+                    completed = false;
+                } else {
+                    result = {};
+                    completed = true;
+                }
+                bInc = 1;
+            } else if (fixpart === FIXARR) {
+                size = get4lastBites(byte); // todo rename it
+                if (size) {
+                    stack = createNode(createSegmentArray(size), stack);
+                    completed = false;
+                } else {
+                    result = [];
+                    completed = true;
+                }
+                bInc = 1;
+            } else {
+                // todo unsupported
+                bInc = 1;
+                completed = true;
+            }
         }
         bi += bInc;
 
