@@ -47,7 +47,7 @@
     "msgpack-lite": "0.1.26",
     "nyc": "8.3.1",
     "rimraf": "2.5.4",
-    "ts-node": "1.6.0",
+    "ts-node": "1.6.1",
     "tslint": "3.15.1",
     "typescript": "2.0.3",
     "typings": "1.4.0"
