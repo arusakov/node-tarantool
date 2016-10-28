@@ -1,7 +1,6 @@
 import { isPosFixInt } from "./int";
-import {
-    getFixMapSize, isFixMap,
-} from "./map";
+import { FIXARR, FIXMAP } from "./types";
+import { get4FirstBites, get4lastBites } from "./utils";
 
 export const TYPE_ARRAY: 1 = 1;
 export const TYPE_MAP: 2 = 2;
@@ -33,14 +32,14 @@ export type Decoder = {
     stack: Segment[];
 }
 
-// function createSegmentArray(count: number): SegmentArray {
-//     return {
-//         contains: 0,
-//         expected: count,
-//         result: new Array(count),
-//         type: TYPE_ARRAY,
-//     };
-// }
+function createSegmentArray(count: number): SegmentArray {
+    return {
+        contains: 0,
+        expected: count,
+        result: new Array(count),
+        type: TYPE_ARRAY,
+    };
+}
 
 function createSegmentMap(count: number): SegmentMap {
     return {
@@ -85,8 +84,10 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
     let bInc: number;
     let result: any;
     let byte: number;
+    let size: number;
     let completed: boolean; // true for all simple types and empty maps and arrayes
     let stack: Node<Segment> | null = null;
+    let fixpart: number;
 
     while (bi < bytesLen) {
         byte = buf[bi];
@@ -94,20 +95,34 @@ export function decode(buf: Buffer, ctx: Decoder = createDecoder()): any {
             result = byte;
             bInc = 1;
             completed = true;
-        } else if (isFixMap(byte)) {
-            const size = getFixMapSize(byte);
-            if (size) {
-                stack = createNode(createSegmentMap(size), stack);
-                completed = false;
+        } else {
+            fixpart = get4FirstBites(byte);
+            // todo @arusakov decode fixstr before
+            if (fixpart === FIXMAP) {
+                size = get4lastBites(byte);
+                if (size) {
+                    stack = createNode(createSegmentMap(size), stack);
+                    completed = false;
+                } else {
+                    result = {};
+                    completed = true;
+                }
+                bInc = 1;
+            } else if (fixpart === FIXARR) {
+                size = get4lastBites(byte); // todo rename it
+                if (size) {
+                    stack = createNode(createSegmentArray(size), stack);
+                    completed = false;
+                } else {
+                    result = [];
+                    completed = true;
+                }
+                bInc = 1;
             } else {
-                result = {};
+                // todo unsupported
+                bInc = 1;
                 completed = true;
             }
-            bInc = 1;
-        } else {
-            // todo unsupported
-            bInc = 1;
-            completed = true;
         }
         bi += bInc;
 
