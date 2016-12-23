@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/arusakov/node-tarantool#readme",
   "devDependencies": {
-    "bluebird": "3.4.6",
+    "bluebird": "3.4.7",
     "codecov": "1.0.1",
     "mocha": "3.2.0",
     "msgpack-lite": "0.1.26",
