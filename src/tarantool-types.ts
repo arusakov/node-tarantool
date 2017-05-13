@@ -14,7 +14,17 @@ export const TKeyIndexId = 0x11
 // todo @arusakov more constants
 // from https://tarantool.org/doc/dev_guide/internals_index.html#unified-packet-structure
 
-export const TCodeSelect = 0x01
-export const TCodePing = 0x40
+export const TCodeSelect: 0x01 = 0x01
+export const TCodePing: 0x40 = 0x40
 
-export const TCodeResponseOk = 0x00
+export type TCode = typeof TCodeSelect | typeof TCodePing
+
+export const TCodeResponseOk: 0x00 = 0x00
+
+export type TResponseHeader = {
+    0: typeof TCodeResponseOk | number
+    1: number
+}
+
+export type TResponse = {
+}

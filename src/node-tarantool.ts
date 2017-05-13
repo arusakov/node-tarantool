@@ -3,7 +3,7 @@ import { Socket } from 'net'
 import { parseGreeting } from './protocol'
 
 export type ConnectionOptions = {
-    port: number;
+    port: number
 }
 
 export class Connection {
@@ -48,6 +48,7 @@ export class Connection {
             // don't know
             return
         }
+        console.log(data.toString('hex'))
         // console.log(decode(data));
         // console.log(decode(data.slice(5)));
     }
