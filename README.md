@@ -1,5 +1,7 @@
 node-tarantool (work in progress)
 =================================
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/arusakov/node-tarantool.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/arusakov/node-tarantool.svg?branch=master)](https://travis-ci.org/arusakov/node-tarantool)
 [![codecov](https://codecov.io/gh/arusakov/node-tarantool/branch/master/graph/badge.svg)](https://codecov.io/gh/arusakov/node-tarantool)
 [![Known Vulnerabilities](https://snyk.io/test/github/arusakov/node-tarantool/badge.svg)](https://snyk.io/test/github/arusakov/node-tarantool)
