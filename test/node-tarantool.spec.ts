@@ -1,5 +1,5 @@
 import { Connection } from '../src/node-tarantool'
-import { TKeyCode, TCodePing, TKeySync } from '../src/tarantool-types'
+import { TKeyCode, TCodePing, TKeySync, TKeySpaceId, TKeyLimit, TKeyKey } from '../src/tarantool-types'
 import { getPrefix } from '../src/protocol';
 
 describe('node-tarantool', () => {
@@ -14,7 +14,14 @@ describe('node-tarantool', () => {
             TKeySync, 1, // sync => 1
         ])
 
-        const packet = [getPrefix(header.length), header]
+        const body = new Buffer([
+            0b10000010, // msgpack map with N=1
+            TKeySpaceId, 0xcd, 0x02, 0x00, // spaceId => 512
+            TKeyLimit, 10,
+            TKeyKey, 0,
+        ]);
+
+        const packet = [getPrefix(header.length +  body.length), header, body]
 
         con.send(Buffer.concat(packet))
         

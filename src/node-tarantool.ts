@@ -18,12 +18,12 @@ export class Connection {
         this.socket.once('data', this.onGreeting)
     }
 
-    connect(): this {
+    connect() {
         this.socket.connect(this.port)
         return this
     }
 
-    send(smth: any): void {
+    send(smth: Buffer) {
         this.socket.write(smth)
     }
 
@@ -37,18 +37,16 @@ export class Connection {
     }
 
     protected onGreeting = (data: Buffer) => {
-        console.log('Greeting', data.length, data)
         console.log(parseGreeting(data))
-
         this.socket.on('data', this.onData)
     }
 
     protected onData = (data: Buffer) => {
+        console.log(data)
         if (data.length < 5) {
             // don't know
             return
         }
-        console.log(data.toString('hex'))
         // console.log(decode(data));
         // console.log(decode(data.slice(5)));
     }
