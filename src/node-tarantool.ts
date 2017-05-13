@@ -1,7 +1,6 @@
-import { decode } from "msgpack-lite";
-import { Socket } from "net";
+import { Socket } from 'net';
 
-import { parseGreeting } from "./protocol";
+import { parseGreeting } from './protocol';
 
 export type ConnectionOptions = {
     port: number;
@@ -18,8 +17,8 @@ export class Connection {
             writable: true,
         } as any); // todo @arusakov give back to DT repo
 
-        this.socket.on("connect", this.onConnect);
-        this.socket.once("data", this.onGreeting);
+        this.socket.on('connect', this.onConnect);
+        this.socket.once('data', this.onGreeting);
     }
 
     connect(): this {
@@ -37,14 +36,14 @@ export class Connection {
     // }
 
     protected onConnect = () => {
-        console.log("connected");
+        console.log('connected');
     }
 
     protected onGreeting = (data: Buffer) => {
-        console.log("Greeting", data.length, data);
+        console.log('Greeting', data.length, data);
         console.log(parseGreeting(data));
 
-        this.socket.on("data", this.onData);
+        this.socket.on('data', this.onData);
     }
 
     protected onData = (data: Buffer) => {
@@ -52,7 +51,7 @@ export class Connection {
             // don't know
             return;
         }
-        console.log(decode(data));
-        console.log(decode(data.slice(5)));
+        // console.log(decode(data));
+        // console.log(decode(data.slice(5)));
     }
 }
