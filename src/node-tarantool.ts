@@ -1,55 +1,52 @@
-import { Socket } from 'net';
+import { Socket } from 'net'
 
-import { parseGreeting } from './protocol';
+import { parseGreeting } from './protocol'
 
 export type ConnectionOptions = {
     port: number;
 }
 
 export class Connection {
-    private socket: Socket;
-    private port: number;
+    private socket: Socket
+    private port: number
 
     constructor({ port }: ConnectionOptions) {
-        this.port = port;
-        this.socket = new Socket({
-            readable: true,
-            writable: true,
-        } as any); // todo @arusakov give back to DT repo
+        this.port = port
+        this.socket = new Socket()
 
-        this.socket.on('connect', this.onConnect);
-        this.socket.once('data', this.onGreeting);
+        this.socket.on('connect', this.onConnect)
+        this.socket.once('data', this.onGreeting)
     }
 
     connect(): this {
-        this.socket.connect(this.port);
-        return this;
+        this.socket.connect(this.port)
+        return this
     }
 
     send(smth: any): void {
-        this.socket.write(smth);
+        this.socket.write(smth)
     }
 
-    // todo 
+    // todo
     // auth(user: string, password: string, cb?: () => void): this {
     //     return this;
     // }
 
     protected onConnect = () => {
-        console.log('connected');
+        console.log('connected')
     }
 
     protected onGreeting = (data: Buffer) => {
-        console.log('Greeting', data.length, data);
-        console.log(parseGreeting(data));
+        console.log('Greeting', data.length, data)
+        console.log(parseGreeting(data))
 
-        this.socket.on('data', this.onData);
+        this.socket.on('data', this.onData)
     }
 
     protected onData = (data: Buffer) => {
         if (data.length < 5) {
             // don't know
-            return;
+            return
         }
         // console.log(decode(data));
         // console.log(decode(data.slice(5)));

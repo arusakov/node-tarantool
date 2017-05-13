@@ -13,7 +13,7 @@
     "compile": "tsc --noEmit -p ./src && tsc --noEmit -p ./test && tsc --noEmit -p ./client",
     "coverage": "NODE_ENV=test TS_NODE_PROJECT=./test nyc mocha",
     "coverage-html": "NODE_ENV=test TS_NODE_PROJECT=./test nyc --reporter=html mocha",
-    "lint": "tslint ./src/**/*.ts ./client/**/*.ts ./test/**/*.ts",
+    "lint": "tslint -p ./src && tslint -p ./test && tslint -p ./client",
     "prepublish": "npm run clean && tsc -d -p ./src",
     "test": "NODE_ENV=test TS_NODE_PROJECT=./test mocha",
     "test-ci": "NODE_ENV=test TS_NODE_PROJECT=./test mocha --watch --watch-extensions ts",
