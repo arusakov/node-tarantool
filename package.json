@@ -44,7 +44,7 @@
     "@types/mocha": "2.2.41",
     "bluebird": "3.5.0",
     "codecov": "2.2.0",
-    "mocha": "3.3.0",
+    "mocha": "3.4.0",
     "nyc": "10.3.0",
     "rimraf": "2.6.1",
     "ts-node": "3.0.4",
