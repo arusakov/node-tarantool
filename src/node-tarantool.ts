@@ -1,6 +1,6 @@
 import { Socket } from 'net'
 
-import { parseGreeting } from './protocol'
+import { parseGreeting, getPrefix } from './protocol'
 
 export type ConnectionOptions = {
     port: number
@@ -13,6 +13,7 @@ export class Connection {
     constructor({ port }: ConnectionOptions) {
         this.port = port
         this.socket = new Socket()
+        this.socket.setNoDelay()
 
         this.socket.on('connect', this.onConnect)
         this.socket.once('data', this.onGreeting)
@@ -23,8 +24,18 @@ export class Connection {
         return this
     }
 
-    send(smth: Buffer) {
-        this.socket.write(smth)
+    sendRaw(header: Buffer, body: Buffer) {
+        this.socket.write(Buffer.concat([
+            getPrefix(header.length + body.length),
+            header,
+            body,
+        ], 5/* prefix size */+ header.length + body.length))
+    }
+
+    insert(_spaceId: number, _tuple: any[]): Promise<any> {
+        return new Promise((resolve, reject) => {
+            // this.sendRaw(Buffer.from([]))
+        })
     }
 
     // todo
@@ -47,6 +58,7 @@ export class Connection {
             // don't know
             return
         }
+        console.log(data.toString())
         // console.log(decode(data));
         // console.log(decode(data.slice(5)));
     }

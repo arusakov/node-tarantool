@@ -1,14 +1,14 @@
 import {
-    TGreeting,
-    TGreetingSaltSize,
-    TGreetingTextSize,
+    Greeting,
+    GreetingSaltSize,
+    GreetingTextSize,
 } from './tarantool-types'
 
 /**
  * https://tarantool.org/doc/dev_guide/internals_index.html#greeting-packet
  */
-export function parseGreeting(buf: Buffer): TGreeting {
-    const salt = buf.slice(TGreetingTextSize, TGreetingTextSize + TGreetingSaltSize)
+export function parseGreeting(buf: Buffer): Greeting {
+    const salt = buf.slice(GreetingTextSize, GreetingTextSize + GreetingSaltSize)
     return {
         salt: salt.toString(),
     }
