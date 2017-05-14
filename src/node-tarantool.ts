@@ -33,7 +33,7 @@ export class Connection {
     }
 
     insert(_spaceId: number, _tuple: any[]): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise((_resolve, _reject) => {
             // this.sendRaw(Buffer.from([]))
         })
     }
