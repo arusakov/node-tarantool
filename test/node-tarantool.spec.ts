@@ -18,8 +18,8 @@ describe('node-tarantool', () => {
             T.KeySpaceId, 0xcd, 0x02, 0x00, // spaceId => 512
             T.KeyTuple, 0x92, 22, 22, // [22, 22]
             // TKeyKey, 0,
-        ]);
-        
+        ])
+
         setTimeout(() => {
             con.sendRaw(header, body)
 

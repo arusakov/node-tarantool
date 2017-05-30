@@ -10,12 +10,12 @@ export const KeySync = 0x01
 export const KeySchemaId = 0x05
 export const KeySpaceId = 0x10
 export const KeyIndexId = 0x11
-export const KeyLimit = 0x12;
-export const KeyOffset = 0x13;
-export const KeyIterator = 0x14;
+export const KeyLimit = 0x12
+export const KeyOffset = 0x13
+export const KeyIterator = 0x14
 
-export const KeyKey = 0x20;
-export const KeyTuple = 0x21;
+export const KeyKey = 0x20
+export const KeyTuple = 0x21
 
 // todo @arusakov more constants
 // from https://tarantool.org/doc/dev_guide/internals_index.html#unified-packet-structure

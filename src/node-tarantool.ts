@@ -1,6 +1,6 @@
 import { Socket } from 'net'
 
-import { parseGreeting, getPrefix } from './protocol'
+import { getPrefix, parseGreeting } from './protocol'
 
 export type ConnectionOptions = {
     port: number
@@ -29,7 +29,7 @@ export class Connection {
             getPrefix(header.length + body.length),
             header,
             body,
-        ], 5/* prefix size */+ header.length + body.length))
+        ], 5 /* prefix size */+ header.length + body.length))
     }
 
     insert(_spaceId: number, _tuple: any[]): Promise<any> {

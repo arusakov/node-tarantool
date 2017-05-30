@@ -8,9 +8,7 @@
             false
         ],
         "typedef":[
-            true,
-            "arrow-parameter",
-            "parameter"
+            false
         ],
         "no-unused-variable": [
             false
@@ -36,6 +34,11 @@
                 },
                 "singleline": "never"
             }
+        ],
+        "variable-name": [
+            "check-format",
+            "allow-leading-underscore",
+            "ban-keywords"
         ]
     }
 }
