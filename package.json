@@ -55,6 +55,6 @@
     "node": "^7.6.0"
   },
   "dependencies": {
-    "@types/node": "7.0.22"
+    "@types/node": "7.0.24"
   }
 }
