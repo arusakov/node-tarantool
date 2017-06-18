@@ -52,9 +52,9 @@
     "typescript": "2.3.4"
   },
   "engines": {
-    "node": "^7.6.0"
+    "node": ">=7.6.0"
   },
   "dependencies": {
-    "@types/node": "7.0.24"
+    "@types/node": ">=7.0.0"
   }
 }

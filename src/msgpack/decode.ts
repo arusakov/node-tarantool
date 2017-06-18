@@ -7,15 +7,16 @@ export const TYPE_MAP: 2 = 2
 
 export interface SegmentBase {
     contains: number
-    expected: number
-    result: any
 }
 
 export interface SegmentArray extends SegmentBase {
+    result: any[]
     type: typeof TYPE_ARRAY
 }
 
 export interface SegmentMap extends SegmentBase {
+    result: any // object
+    expected: number
     key: any
     type: typeof TYPE_MAP
 }
@@ -35,7 +36,6 @@ export type Decoder = {
 function createSegmentArray(count: number): SegmentArray {
     return {
         contains: 0,
-        expected: count,
         result: new Array(count),
         type: TYPE_ARRAY,
     }
@@ -58,14 +58,16 @@ function createNode<T>(val: T, next: Node<T> | null): Node<T> {
 function addValueToSegment(seg: Segment, val: any): boolean {
     if (seg.type === TYPE_ARRAY) {
         seg.result[seg.contains] = val
-    } else {
-        if (seg.contains % 2) {
-            seg.result[seg.key] = val
-        } else {
-            seg.key = val
-        }
+        return seg.result.length === ++seg.contains
     }
-    return ++seg.contains === seg.expected
+
+    // for MAP
+    if (seg.contains % 2) {
+        seg.result[seg.key] = val
+    } else {
+        seg.key = val
+    }
+    return seg.expected === ++seg.contains
 }
 
 export function createDecoder(): Decoder {
