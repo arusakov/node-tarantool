@@ -49,7 +49,7 @@
     "rimraf": "2.6.1",
     "ts-node": "3.0.4",
     "tslint": "5.4.1",
-    "typescript": "2.3.4"
+    "typescript": "2.4.1"
   },
   "engines": {
     "node": ">=7.6.0"
