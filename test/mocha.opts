@@ -1,2 +1,3 @@
 --compilers ts-node/register
-./src/**/*.ts ./test/**/*.spec.ts
+./src/**/*.ts
+./test/**/*.spec.ts

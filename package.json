@@ -1,21 +1,16 @@
 {
   "name": "node-tarantool",
   "version": "0.0.1",
-  "description": "Tarantool v1.7+ driver for Node.js",
-  "main": "./lib/node-tarantool.js",
-  "typings": "./lib/node-tarantool.d.ts",
-  "files": [
-    "lib"
-  ],
+  "description": "Tarantool v1.6+ driver for Node.js",
   "scripts": {
+    "build": "tsc -d -p ./src --outDir ./dist",
     "clean": "rimraf ./lib",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "compile": "tsc --noEmit -p ./src && tsc --noEmit -p ./test",
     "coverage": "NODE_ENV=test TS_NODE_PROJECT=./test nyc mocha",
     "coverage-html": "NODE_ENV=test TS_NODE_PROJECT=./test nyc --reporter=html mocha",
     "lint": "tslint -p ./src && tslint -p ./test",
-    "prepublish": "npm run clean && tsc -d -p ./src",
-    "test": "NODE_ENV=test TS_NODE_PROJECT=./test mocha",
+    "test": "NODE_ENV=test TS_NODE_PROJECT=./test/tsconfig.json mocha",
     "test-ci": "NODE_ENV=test TS_NODE_PROJECT=./test mocha --watch --watch-extensions ts",
     "travis": "npm run lint && npm run compile && npm run coverage && npm run codecov"
   },
@@ -41,20 +36,17 @@
   },
   "homepage": "https://github.com/arusakov/node-tarantool#readme",
   "devDependencies": {
-    "@types/mocha": "2.2.41",
-    "bluebird": "3.5.0",
-    "codecov": "2.2.0",
-    "mocha": "3.4.2",
-    "nyc": "10.3.2",
-    "rimraf": "2.6.1",
-    "ts-node": "3.0.4",
-    "tslint": "5.4.1",
-    "typescript": "2.3.4"
+    "@types/mocha": "5.2.4",
+    "@types/node": "10.5.1",
+    "codecov": "3.0.2",
+    "mocha": "5.2.0",
+    "nyc": "12.0.2",
+    "rimraf": "2.6.2",
+    "ts-node": "7.0.0",
+    "tslint": "5.10.0",
+    "typescript": "2.9.2"
   },
   "engines": {
-    "node": ">=7.6.0"
-  },
-  "dependencies": {
-    "@types/node": ">=7.0.0"
+    "node": ">=8"
   }
 }
