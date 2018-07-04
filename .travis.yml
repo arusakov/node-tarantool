@@ -18,6 +18,9 @@ services:
 before_script:
   - docker run -p 3301:3301 -d "tarantool/tarantool:$TARANTOOL_TAG"
 
+cache:
+  yarn: true
+
 script:
   - yarn compile
   - yarn lint
