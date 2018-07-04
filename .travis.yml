@@ -15,5 +15,11 @@ sudo: required
 services:
   - docker
 
-script:
+before_script:
   - docker run -p 3301:3301 -d "tarantool/tarantool:$TARANTOOL_TAG"
+
+script:
+  - yarn compile
+  - yarn lint
+  - yarn coverage
+  - yarn codecove

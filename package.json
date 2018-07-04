@@ -7,12 +7,11 @@
     "clean": "rimraf ./lib",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "compile": "tsc --noEmit -p ./src && tsc --noEmit -p ./test",
-    "coverage": "NODE_ENV=test TS_NODE_PROJECT=./test nyc mocha",
-    "coverage-html": "NODE_ENV=test TS_NODE_PROJECT=./test nyc --reporter=html mocha",
+    "coverage-html": "NODE_ENV=test TS_NODE_PROJECT=./test/tsconfig.json nyc --reporter=html mocha",
+    "coverage": "NODE_ENV=test TS_NODE_PROJECT=./test/tsconfig.json nyc mocha",
     "lint": "tslint -p ./src && tslint -p ./test",
-    "test": "NODE_ENV=test TS_NODE_PROJECT=./test/tsconfig.json mocha",
     "test-ci": "NODE_ENV=test TS_NODE_PROJECT=./test mocha --watch --watch-extensions ts",
-    "travis": "npm run lint && npm run compile && npm run coverage && npm run codecov"
+    "test": "NODE_ENV=test TS_NODE_PROJECT=./test/tsconfig.json mocha",
   },
   "repository": {
     "type": "git",
