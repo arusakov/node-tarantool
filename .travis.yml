@@ -25,4 +25,4 @@ script:
   - yarn compile
   - yarn lint
   - yarn coverage
-  - yarn codecove
+  - yarn codecov
