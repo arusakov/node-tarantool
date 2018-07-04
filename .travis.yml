@@ -1,5 +1,19 @@
 language: node_js
 node_js:
-  - "7.6"
-  - "7"
-script: npm run travis
+  - "8"
+  # - "9"
+  - "10"
+
+env:
+  # - TARANTOOL_TAG=1.6.10
+  # - TARANTOOL_TAG=1.7.6
+  # - TARANTOOL_TAG=1.8.1
+  # - TARANTOOL_TAG=1.9.1
+  - TARANTOOL_TAG=1.10.0
+
+sudo: required
+services:
+  - docker
+
+script:
+  - docker run -p 3301:3301 -d "tarantool/tarantool:$TARANTOOL_TAG"
