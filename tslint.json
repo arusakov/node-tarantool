@@ -13,6 +13,7 @@
         "no-unused-variable": [
             false
         ],
+        "max-classes-per-file": false,
         "interface-name": [
             false
         ],
@@ -29,8 +30,8 @@
                "multiline": {
                     "objects": "always",
                     "arrays": "always",
-                    "functions": "never",
-                    "typeLiterals": "never"
+                    "functions": "always",
+                    "typeLiterals": "always"
                 },
                 "singleline": "never"
             }

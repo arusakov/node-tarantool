@@ -7,11 +7,12 @@
     "clean": "rimraf ./lib",
     "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "compile": "tsc --noEmit -p ./src && tsc --noEmit -p ./test",
-    "coverage-html": "NODE_ENV=test TS_NODE_PROJECT=./test/tsconfig.json nyc --reporter=html mocha",
-    "coverage": "NODE_ENV=test TS_NODE_PROJECT=./test/tsconfig.json nyc mocha",
+    "coverage-html": "TS_NODE_PROJECT=./test/tsconfig.json nyc --reporter=html mocha",
+    "coverage": "TS_NODE_PROJECT=./test/tsconfig.json nyc mocha",
     "lint": "tslint -p ./src && tslint -p ./test",
-    "test-ci": "NODE_ENV=test TS_NODE_PROJECT=./test mocha --watch --watch-extensions ts",
-    "test": "NODE_ENV=test TS_NODE_PROJECT=./test/tsconfig.json mocha"
+    "test-ci": "TS_NODE_PROJECT=./test/tsconfig.json mocha --watch --watch-extensions ts",
+    "test": "TS_NODE_PROJECT=./test/tsconfig.json mocha",
+    "test-run": "TS_NODE_PROJECT=./test/tsconfig.json ts-node ./src"
   },
   "repository": {
     "type": "git",
@@ -48,5 +49,7 @@
   "engines": {
     "node": ">=8"
   },
-  "dependencies": {}
+  "dependencies": {
+    "msgpack-lite": "0.1.26"
+  }
 }
