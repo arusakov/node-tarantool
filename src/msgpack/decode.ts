@@ -45,9 +45,9 @@ function createSegmentMap(count: number): SegmentMap {
     return {
         contains: 0,
         expected: count * 2,
+        key: null,
         result: {},
         type: TYPE_MAP,
-        key: null,
     }
 }
 

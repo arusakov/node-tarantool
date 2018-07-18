@@ -4,7 +4,7 @@ import { Socket } from 'net'
 export type ConnectOptions = {
   noDelay?: boolean
   keepAlive?: boolean
-  keepAliveTimeout?: number,
+  keepAliveTimeout?: number
 }
 
 export const enum UserKeys {
@@ -75,14 +75,14 @@ export class TarantoolError extends Error {
 export type Request = {
   resolve: (data: any) => void
   reject: (err: TarantoolError) => void
-  timer: number,
+  timer: number
 }
 
 // tslint:disable-next-line:no-empty
 const noop = () => { }
 const requestDef: Request = {
-  resolve: noop,
   reject: noop,
+  resolve: noop,
   timer: 0,
 }
 
@@ -90,12 +90,12 @@ const MAX_REQ_ID = 0x0fffffff
 
 type TarantoolPackageSize = number
 type TarantoolPackageHeader = {
-  [UserKeys.code]: number,
-  [UserKeys.sync]: number,
-  [UserKeys.schema_id]: number,
+  [UserKeys.code]: number
+  [UserKeys.sync]: number
+  [UserKeys.schema_id]: number
 }
 type TarantoolPackageBody = {
-  [UserKeys.data]: any,
+  [UserKeys.data]: any
 }
 
 type MsgPackEntity = TarantoolPackageSize | TarantoolPackageHeader | TarantoolPackageBody
@@ -128,7 +128,7 @@ export class TarantoolConnection {
   ) {
   }
 
-  connect(callback: () => void) {
+  public connect(callback: () => void) {
     if (this.ready) {
       throwError()
     }
@@ -138,14 +138,14 @@ export class TarantoolConnection {
     this.tryConnect()
   }
 
-  close(callback: () => void) {
+  public close(callback: () => void) {
     if (this.socket) {
       this.socket.end()
     }
     this.closeCallback = callback
   }
 
-  insert(space: number, tuple: any[]) {
+  public insert(space: number, tuple: any[]) {
     const tupleBuffer = encode(tuple)
 
     const bodyBuffer = Buffer.allocUnsafe(6 + tupleBuffer.length)
@@ -160,7 +160,7 @@ export class TarantoolConnection {
     return this.request(UserCommandsCodes.insert, bodyBuffer)
   }
 
-  call(func: string, tuple: any[]) {
+  public call(func: string, tuple: any[]) {
     const tupleBuffer = encode(tuple)
     const funcBuffer = encode(func)
 
