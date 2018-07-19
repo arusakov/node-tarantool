@@ -1,3 +1,5 @@
+box.cfg{}
+
 box.schema.space.create('test')
 box.space.test:create_index('primary')
 

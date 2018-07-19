@@ -1,6 +1,26 @@
 import { deepStrictEqual } from 'assert'
 
+import { exec } from 'shelljs' // tslint:disable-line
+
 import { connect, TarantoolConnection } from '../src'
+
+describe('tarantool restart', () => {
+  let tnt: TarantoolConnection
+
+  before(() => connect().then((conn) => {
+    tnt = conn
+  }))
+
+  after((cb) => {
+    tnt.close(cb)
+  })
+
+  it('restart', async () => {
+    deepStrictEqual(await tnt.call('func_nil', []), [null])
+    exec('docker restart tarantool')
+    deepStrictEqual(await tnt.call('func_nil', []), [null])
+  })
+})
 
 describe('function calls', () => {
 
