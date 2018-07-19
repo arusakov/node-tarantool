@@ -1,7 +1,9 @@
 box.cfg{}
 
-box.schema.space.create('test')
-box.space.test:create_index('primary')
+box.once('init_test', function()
+    box.schema.space.create('test')
+    box.space.test:create_index('primary')
+end)
 
 function func_select()
     return box.space.test:select()

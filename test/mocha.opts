@@ -1,3 +1,5 @@
 --require ts-node/register
+--slow 7500
+--timeout 7500
 ./src/index.ts
 ./test/index.spec.ts

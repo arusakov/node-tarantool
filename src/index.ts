@@ -164,7 +164,7 @@ export class TarantoolConnection {
     const tupleBuffer = encode(tuple)
     const funcBuffer = encode(func)
 
-    const bodyBuffer = Buffer.allocUnsafe(6 + tupleBuffer.length + funcBuffer.length)
+    const bodyBuffer = Buffer.allocUnsafe(3 + tupleBuffer.length + funcBuffer.length)
     bodyBuffer[0] = 0x82
     bodyBuffer[1] = UserKeys.function_name
     funcBuffer.copy(bodyBuffer, 2)

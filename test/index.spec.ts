@@ -1,8 +1,14 @@
 import { deepStrictEqual } from 'assert'
 
-import { exec } from 'shelljs' // tslint:disable-line
+import { exec } from 'shelljs' // tslint:disable-line:no-implicit-dependencies
 
 import { connect, TarantoolConnection } from '../src'
+
+const timeoutPromise = (ms: number) => new Promise((resolve) => {
+  setTimeout(resolve, ms)
+})
+
+const DOCKER_NAME = 'tarantool'
 
 describe('tarantool restart', () => {
   let tnt: TarantoolConnection
@@ -17,7 +23,19 @@ describe('tarantool restart', () => {
 
   it('restart', async () => {
     deepStrictEqual(await tnt.call('func_nil', []), [null])
-    exec('docker restart tarantool')
+
+    exec(`docker restart ${DOCKER_NAME}`)
+    await timeoutPromise(2000)
+
+    deepStrictEqual(await tnt.call('func_nil', []), [null])
+  })
+
+  it('kill', async () => {
+    deepStrictEqual(await tnt.call('func_nil', []), [null])
+
+    exec(`docker kill ${DOCKER_NAME} && docker start ${DOCKER_NAME}`)
+    await timeoutPromise(2000)
+
     deepStrictEqual(await tnt.call('func_nil', []), [null])
   })
 })
