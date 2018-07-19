@@ -110,6 +110,8 @@ const throwError = () => {
   throw new TarantoolError('', TarantoolErrorCode.TODO)
 }
 
+const MP_EMPTY_ARR = Buffer.from([0x90])
+
 export class TarantoolConnection {
   private closeCallback: (() => void) | null = null
   private connectCallback: ((tnt: this) => void) = noop
@@ -160,8 +162,8 @@ export class TarantoolConnection {
     return this.request(UserCommandsCodes.insert, bodyBuffer)
   }
 
-  public call(func: string, tuple: any[]) {
-    const tupleBuffer = encode(tuple)
+  public call(func: string, tuple?: any[]) {
+    const tupleBuffer = tuple && tuple.length > 0 ? encode(tuple) : MP_EMPTY_ARR
     const funcBuffer = encode(func)
 
     const bodyBuffer = Buffer.allocUnsafe(3 + tupleBuffer.length + funcBuffer.length)

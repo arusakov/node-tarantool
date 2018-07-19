@@ -10,7 +10,32 @@ const timeoutPromise = (ms: number) => new Promise((resolve) => {
 
 const DOCKER_NAME = 'tarantool'
 
-describe('tarantool restart', () => {
+describe('function calls', () => {
+
+  let tnt: TarantoolConnection
+
+  before(() => connect().then((conn) => {
+    tnt = conn
+  }))
+
+  after((cb) => {
+    tnt.close(cb)
+  })
+
+  it('func_nil', async () => {
+    deepStrictEqual(await tnt.call('func_nil', []), [null])
+  })
+
+  it('func_count', async () => {
+    deepStrictEqual(await tnt.call('func_count', []), [0])
+  })
+
+  it('func_select', async () => {
+    deepStrictEqual(await tnt.call('func_select', []), [[]])
+  })
+})
+
+describe('tarantool restarting', () => {
   let tnt: TarantoolConnection
 
   before(() => connect().then((conn) => {
@@ -40,27 +65,26 @@ describe('tarantool restart', () => {
   })
 })
 
-describe('function calls', () => {
+describe('tarantool is not started', () => {
 
-  let tnt: TarantoolConnection
-
-  before(() => connect().then((conn) => {
-    tnt = conn
-  }))
-
-  after((cb) => {
-    tnt.close(cb)
+  before(() => {
+    exec(`docker stop ${DOCKER_NAME}`)
   })
 
-  it('func_nil', async () => {
-    deepStrictEqual(await tnt.call('func_nil', []), [null])
-  })
-
-  it('func_count', async () => {
-    deepStrictEqual(await tnt.call('func_count', []), [0])
-  })
-
-  it('func_select', async () => {
-    deepStrictEqual(await tnt.call('func_select', []), [[]])
+  it('_', async () => {
+    let tnt: TarantoolConnection
+    return Promise.all([
+      connect()
+        .then((conn) => {
+          tnt = conn
+          return tnt.call('func_nil')
+        })
+        .then((result) => deepStrictEqual(result, [null]))
+        .then(() => new Promise((resolve) => {
+          tnt.close(resolve)
+        })),
+      timeoutPromise(1000)
+        .then(() => exec(`docker start ${DOCKER_NAME}`)),
+    ])
   })
 })
