@@ -16,8 +16,7 @@ services:
   - docker
 
 before_script:
-  - docker run -p 3301:3301 --name tarantool -d "tarantool/tarantool:$TARANTOOL_TAG"
-  - docker exec -i tarantool console < ./init.lua
+  - docker run -p 3301:3301 --name tarantool -v $(pwd):/opt/tarantool -d "tarantool/tarantool:$TARANTOOL_TAG" tarantool /opt/tarantool/test.lua
 
 cache:
   yarn: true
